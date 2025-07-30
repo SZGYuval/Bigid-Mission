@@ -2,11 +2,11 @@ pipeline {
     agent { label 'aws-slave-node' }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
+//         stage('Checkout') {
+//             steps {
+//                 checkout scm
+//             }
+//         }
         stage('Docker, Git and Trivy installions') {
             steps {
                 sh 'docker -v'
