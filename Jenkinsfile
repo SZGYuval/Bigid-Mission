@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'aws slave node' }
+    agent { label 'aws-slave-node' }
 
     stages {
         stage('Checkout') {
