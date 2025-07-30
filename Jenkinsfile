@@ -7,9 +7,10 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Print environment varaible') {
+        stage('Docker and Git installions') {
             steps {
-                sh 'printenv'
+                sh 'docker -v'
+                sh 'git -v'
             }
         }
     }
