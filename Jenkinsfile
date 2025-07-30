@@ -33,7 +33,7 @@ pipeline {
                             --format template --template "@/usr/local/share/trivy/templates/html.tpl" \
                             --output trivy-image-CRITICAL-HIGH-results.html trivy-image-CRITICAL-HIGH-results.json
                         trivy convert \
-                            --format template --template "@/usr/local/share/trivy/templates/junit.tpl " \
+                            --format template --template "@/usr/local/share/trivy/templates/junit.tpl" \
                             --output trivy-image-CRITICAL-HIGH-results.xml trivy-image-CRITICAL-HIGH-results.json
                     '''
                 }
