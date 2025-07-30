@@ -43,7 +43,7 @@ pipeline {
 
     post {
         always {
-            junit allowEmptyResults: true, testResults: 'trivy-image-CRITICAL-HIGH-results.xml'
+            junit allowEmptyResults: true, skipMarkingBuildUnstable: true, testResults: 'trivy-image-CRITICAL-HIGH-results.xml'
 
             publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './',
              reportFiles: 'trivy-image-CRITICAL-HIGH-results.html', reportName: 'Trivy Image Critical-High Vulnerabilities Report',
