@@ -19,5 +19,17 @@ pipeline {
                 sh 'docker image build -t szgyvual123/bigid-repo:$GIT_COMMIT .'
             }
         }
+
+        stage('Trivy Vulnerability Scanner') {
+            steps {
+                sh '''
+                    trivy image szgyuval123/bigid-repo:$GIT_COMMIT \
+                        --severity HIGH \
+                        --exit-code 0 \
+                        --quiet \
+                        --format json -o trivy-image-HIGH-results.json
+                '''
+            }
+        }
     }
 }
