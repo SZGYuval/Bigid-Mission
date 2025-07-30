@@ -54,6 +54,19 @@ pipeline {
                 sh 'helm version'
             }
         }
+
+        stage('Adding ingress nginx helm repo') {
+            steps {
+                sh 'helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx'
+                sh 'helm repo update'
+            }
+        }
+
+        stage('Installing ingress controller') {
+            steps {
+                sh 'helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace'
+            }
+        }
     }
 
     post {
