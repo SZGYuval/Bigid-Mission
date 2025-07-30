@@ -13,5 +13,10 @@ pipeline {
                 sh 'git -v'
             }
         }
+        stage('Build docker image') {
+            steps {
+                sh 'docker image build -t szgyvual123/bigid-repo:$GIT_COMMIT .'
+            }
+        }
     }
 }
