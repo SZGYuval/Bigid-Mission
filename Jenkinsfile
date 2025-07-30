@@ -39,6 +39,14 @@ pipeline {
                 }
             }
         }
+
+        stage('Pushing Image to docker repository') {
+            steps {
+                withDockerRegistry(credentialsId: 'docker-hub-creds', url: "") {
+                    sh 'docker push szgyvual123/bigid-repo:$GIT_COMMIT'
+                }
+            }
+        }
     }
 
     post {
