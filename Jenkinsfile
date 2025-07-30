@@ -16,14 +16,11 @@
 // }
 
 pipeline {
-    agent {
-        label 'Jenkins-Agent'   // must match your EC2 cloud template label
-    }
-
+    agent { label 'aws-ec2-instance-docker' }
     stages {
-        stage('Run on EC2') {
+        stage('Test') {
             steps {
-                sh 'echo Hello from EC2 agent!'
+                sh 'echo Hello from EC2 agent'
             }
         }
     }
