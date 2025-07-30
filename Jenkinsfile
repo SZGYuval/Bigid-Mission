@@ -44,7 +44,6 @@ pipeline {
         stage('Pushing Image to docker repository') {
             steps {
                 withDockerRegistry(credentialsId: 'docker-hub-creds', url: "") {
-                    sh 'docker info | grep Username'
                     sh 'docker image push szgyuval123/mission-repo:$GIT_COMMIT'
                 }
             }
