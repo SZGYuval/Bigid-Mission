@@ -26,6 +26,15 @@ pipeline {
                     trivy image --scanners vuln --severity HIGH,CRITICAL --format json --output trivy-image-CRITICAL-HIGH-results.json szgyvual123/bigid-repo:$GIT_COMMIT
                 '''
             }
+            post {
+                always {
+                    sh '''
+                        trivy convert \
+                            --format template --template "@/usr/local/share/trivy/templates/html.tpl" \
+                            --output trivy-image-CRITICAL-HIGH-results.html trivy-image-CRITICAL-HIGH-results.html
+                    '''
+                }
+            }
         }
     }
 }
