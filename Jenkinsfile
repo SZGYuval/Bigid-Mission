@@ -11,7 +11,6 @@ pipeline {
         stage('Docker, Git and Trivy installions') {
             steps {
                 sh 'docker -v'
-                sh 'git -v'
                 sh 'trivy -v'
             }
         }
@@ -34,7 +33,7 @@ pipeline {
                             --format template --template "@/usr/local/share/trivy/templates/html.tpl" \
                             --output trivy-image-CRITICAL-HIGH-results.html trivy-image-CRITICAL-HIGH-results.json
                         trivy convert \
-                            --format template --template "@/usr/local/share/trivy/templates/junit.tpl" \
+                            --format template --template "@mc " \
                             --output trivy-image-CRITICAL-HIGH-results.xml trivy-image-CRITICAL-HIGH-results.json
                     '''
                 }
