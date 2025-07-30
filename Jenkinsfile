@@ -11,6 +11,7 @@ pipeline {
         stage('Docker, Git and Trivy installions') {
             steps {
                 sh 'docker -v'
+                sh 'git -v'
                 sh 'trivy -v'
             }
         }
