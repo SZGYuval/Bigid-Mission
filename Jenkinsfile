@@ -47,6 +47,13 @@ pipeline {
                 }
             }
         }
+
+        stage('Installing helm component on k8s cluster') {
+            steps {
+                sh 'curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash'
+                sh 'helm version'
+            }
+        }
     }
 
     post {
