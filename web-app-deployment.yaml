@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-application-deploy
+  namespace: web-app
+spec:
+  replicas: 2
+  selector:
+    metachLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web-application-container
+          image: szgyuval123/mission-repo:c3d5b28f63851facf2336349dc882dc8d664cc23
+          ports:
+            - containerPort: 5000
+          startupProbe:
+            httpGet:
+              port: 5000
+              path: /health
+          livenessProbe:
+            httpGet:
+              port: 5000
+              path: /health
+          readinessProbe:
+            httpGet:
+              port: 5000
+              path: /health
