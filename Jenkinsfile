@@ -23,13 +23,12 @@ pipeline {
         stage('Trivy Vulnerability Scanner') {
             steps {
                 sh '''
-                    trivy image \
+                    trivy image szgyuval123/bigid-repo:$GIT_COMMIT \
                         --severity HIGH \
                         --exit-code 0 \
                         --quiet \
                         --format json \
                         --output trivy-image-HIGH-results.json \
-                        szgyuval123/bigid-repo:$GIT_COMMIT
                 '''
             }
         }
