@@ -17,14 +17,14 @@ pipeline {
         }
         stage('Build docker image') {
             steps {
-                sh 'docker image build -t szgyvual123/bigid-repo:$GIT_COMMIT .'
+                sh 'docker image build -t szgyuval123/mission-repo:$GIT_COMMIT .'
             }
         }
 
         stage('Trivy Vulnerability Scanner') {
             steps {
                 sh '''
-                    trivy image --scanners vuln --severity HIGH,CRITICAL --format json --output trivy-image-CRITICAL-HIGH-results.json szgyvual123/bigid-repo:$GIT_COMMIT
+                    trivy image --scanners vuln --severity HIGH,CRITICAL --format json --output trivy-image-CRITICAL-HIGH-results.json szgyuval123/mission-repo:$GIT_COMMIT
                 '''
             }
             post {
@@ -44,7 +44,8 @@ pipeline {
         stage('Pushing Image to docker repository') {
             steps {
                 withDockerRegistry(credentialsId: 'docker-hub-creds', url: "") {
-                    sh 'docker image push szgyvual123/bigid-repo:$GIT_COMMIT'
+                    sh 'docker info | grep Username'
+                    sh 'docker image push szgyuval123/mission-repo:$GIT_COMMIT'
                 }
             }
         }
