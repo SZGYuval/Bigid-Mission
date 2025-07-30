@@ -31,7 +31,7 @@ pipeline {
                     sh '''
                         trivy convert \
                             --format template --template "@/usr/local/share/trivy/templates/html.tpl" \
-                            --output trivy-image-CRITICAL-HIGH-results.html trivy-image-CRITICAL-HIGH-results.html
+                            --output trivy-image-CRITICAL-HIGH-results.html trivy-image-CRITICAL-HIGH-results.json
                     '''
                 }
             }
