@@ -23,7 +23,7 @@ pipeline {
         stage('Trivy Vulnerability Scanner') {
             steps {
                 sh '''
-                    trivy image --severity HIGH,CRITICAL --format json --output trivy-image-CRITICAL-HIGHT-results.json szgyvual123/bigid-repo:$GIT_COMMIT
+                    trivy image --severity HIGH,CRITICAL --format json --output trivy-image-CRITICAL-HIGH-results.json szgyvual123/bigid-repo:$GIT_COMMIT
                 '''
             }
         }
