@@ -77,7 +77,18 @@ pipeline {
 
         stage('Creating Helm Chart for Web Application') {
             steps {
-                sh 'helm create web-app-chart'
+                sh '''
+                    if [ ! -d "web-app-chart" ]; then
+                        echo "Directory does not exist. Creating Helm chart"
+                        helm create web-app-chart
+                    fi
+                    echo "replacing default .yaml files with app files"
+                    rm -f web-app-chart/templates/*.yaml
+                    cp web-app-deployment.yaml web-app-chart/templates/
+                    cp web-app-service.yaml web-app-chart/templates/
+                    cp web-app-namespace.yaml web-app-chart/templates/
+                    cp web-app-ingress.yaml web-app-chart/templates/
+                '''
             }
         }
     }
