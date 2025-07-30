@@ -64,7 +64,14 @@ pipeline {
 
         stage('Installing ingress controller') {
             steps {
-                sh 'helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace'
+                sh '''
+                    if ! helm status ingress-nginx -n ingress-nginx > /dev/null 2>&1; then
+                        echo "Ingress-Nginx not found. Installing..."
+                        helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace
+                    else
+                        echo "Ingress-Nginx already installed. Skipping installation."
+                    fi
+                '''
             }
         }
     }
