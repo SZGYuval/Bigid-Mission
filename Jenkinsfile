@@ -74,6 +74,12 @@ pipeline {
                 '''
             }
         }
+
+        stage('Creating Helm Chart for Web Application') {
+            steps {
+                sh 'helm create web-app-chart'
+            }
+        }
     }
 
     post {
