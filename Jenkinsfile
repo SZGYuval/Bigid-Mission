@@ -7,10 +7,11 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Docker and Git installions') {
+        stage('Docker, Git and Trivy installions') {
             steps {
                 sh 'docker -v'
                 sh 'git -v'
+                sh 'trivy -v'
             }
         }
         stage('Build docker image') {
