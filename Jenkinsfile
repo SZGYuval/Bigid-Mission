@@ -111,12 +111,16 @@ pipeline {
              reportFiles: 'trivy-image-CRITICAL-HIGH-results.html', reportName: 'Trivy Image Critical-High Vulnerabilities Report',
              reportTitles: '', useWrapperFileDirectly: true])
 
-            emailext body: '''Build finished with status: ${currentBuild.currentResult}
+           emailext(
+            body: """Build finished with status: ${currentBuild.currentResult}
             Job: ${env.JOB_NAME}
             Build number: ${env.BUILD_NUMBER}
-            URL: ${env.BUILD_URL}''', subject: 'Jenkins Build - ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}',
-            to: 'yuval100r@gmail.com'
+            URL: ${env.BUILD_URL}
+            """,
+            subject: "Jenkins Build - ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
+            to: 'yuval100r@gmail.com',
             mimeType: 'text/plain'
+            )
         }
     }
 }
