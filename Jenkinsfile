@@ -91,6 +91,16 @@ pipeline {
                 '''
             }
         }
+
+        stage('Deploying Helm Chart') {
+            steps {
+                sh '''
+                    helm upgrade --install web-app ./web-app-chart \
+                    -f values.yaml \
+                    --set image.tag=$GIT_COMMIT
+                '''
+            }
+        }
     }
 
     post {
