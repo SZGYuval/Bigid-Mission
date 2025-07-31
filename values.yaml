@@ -1,0 +1,22 @@
+namespace: web-app
+
+image:
+  repository: szgyuval123/bigid-repo
+  tag: latest
+  pullPolicy: IfNotPresent
+
+deployment:
+  name: web-application-deploy
+  replicas: 2
+  label: web
+
+service:
+  port: 5000
+  name: web-app-service
+  type: ClusterIP
+  protocol: TCP
+
+ingress:
+  name: web-app-ingress
+  className: nginx
+  pathType: Prefix
