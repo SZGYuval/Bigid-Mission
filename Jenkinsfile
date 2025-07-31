@@ -48,6 +48,17 @@ pipeline {
             }
         }
 
+        stage('Run Unit Tests') {
+            steps {
+                sh '''
+                    python3 -m venv venv
+                    source venv/bin/activate
+                    pip install flask  requests
+                    python test.py
+                '''
+            }
+        }
+
         stage('Installing helm component on k8s cluster') {
             steps {
                 sh 'curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash'
