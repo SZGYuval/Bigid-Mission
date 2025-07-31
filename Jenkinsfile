@@ -2,25 +2,31 @@ pipeline {
     agent { label 'aws-slave-node' }
 
     stages {
-
+        // verfies installations of docker, git and trivy
         stage('Docker, Git and Trivy installions') {
             steps {
                 sh 'docker -v'
+                sh 'git -v'
                 sh 'trivy -v'
             }
         }
+
+        // builds the docker image and gives it tag according to the id of the current commit
         stage('Build docker image') {
             steps {
                 sh 'docker image build -t szgyuval123/mission-repo:$GIT_COMMIT .'
             }
         }
 
+        // scans the image to find vulnerabilities in HIGH and CRITICAL severities
         stage('Trivy Vulnerability Scanner') {
             steps {
                 sh '''
                     trivy image --scanners vuln --severity HIGH,CRITICAL --format json --output trivy-image-CRITICAL-HIGH-results.json szgyuval123/mission-repo:$GIT_COMMIT
                 '''
             }
+
+            // converts json file to HTML and XML files
             post {
                 always {
                     sh '''
