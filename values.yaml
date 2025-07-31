@@ -16,6 +16,9 @@ service:
   type: ClusterIP
   protocol: TCP
 
+secret:
+  name: regcred
+
 ingress:
   name: web-app-ingress
   className: nginx

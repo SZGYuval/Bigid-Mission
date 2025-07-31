@@ -13,6 +13,8 @@ spec:
       labels:
         app: {{ .Values.deployment.label }}
     spec:
+      imagePullSecrets:
+        name: {{ .Values.secret.name }}
       containers:
         - name: web-application-container
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

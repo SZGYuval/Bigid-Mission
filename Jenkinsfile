@@ -41,14 +41,17 @@ pipeline {
             }
         }
 
+        // pushes image to docker hub registry
         stage('Pushing Image to docker repository') {
             steps {
+                // uses credentials of my docker hub account - defined within Jenkins credentials section
                 withDockerRegistry(credentialsId: 'docker-hub-creds', url: "") {
                     sh 'docker image push szgyuval123/mission-repo:$GIT_COMMIT'
                 }
             }
         }
 
+        // runs unit tests - creates unique python environment within the app to run the tests
         stage('Run Unit Tests') {
             steps {
                 sh '''
@@ -60,6 +63,7 @@ pipeline {
             }
         }
 
+        // installs helm on the agent (k8s cluster) if is not already installed
         stage('Installing helm component on k8s cluster') {
             steps {
                 sh 'curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash'
@@ -67,6 +71,7 @@ pipeline {
             }
         }
 
+        // adds the ingress-nginx helm chart to the k8s cluster
         stage('Adding ingress nginx helm repo') {
             steps {
                 sh 'helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx'
@@ -74,6 +79,7 @@ pipeline {
             }
         }
 
+        // installs the ingress-controller helm chart if is not already installed
         stage('Installing ingress controller') {
             steps {
                 sh '''
@@ -87,6 +93,8 @@ pipeline {
             }
         }
 
+        // creates the helm chart for the web application if not already exists
+        // replaces current .yaml in the template directory with the yaml files provided in the workspace from the github repo
         stage('Creating Helm Chart for Web Application') {
             steps {
                 sh '''
@@ -100,10 +108,13 @@ pipeline {
                     mv web-app-service.yaml web-app-chart/templates/
                     mv web-app-namespace.yaml web-app-chart/templates/
                     mv web-app-ingress.yaml web-app-chart/templates/
+                    mv web-app-secret.yaml web-app-chart/templates
                 '''
             }
         }
 
+        // deploys the helm chart - If it is not the first time - just upgrades the release version
+        // sets the image tag to be the value of the $GIT_COMMIT variable so the image will update automatically
         stage('Deploying Helm Chart') {
             steps {
                 sh '''
@@ -117,12 +128,15 @@ pipeline {
 
     post {
         always {
+            // publishes the xml report which trivy produced
             junit allowEmptyResults: true, skipMarkingBuildUnstable: true, testResults: 'trivy-image-CRITICAL-HIGH-results.xml'
 
+            // publishes the HTML report which trivy produced
             publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './',
              reportFiles: 'trivy-image-CRITICAL-HIGH-results.html', reportName: 'Trivy Image Critical-High Vulnerabilities Report',
              reportTitles: '', useWrapperFileDirectly: true])
 
+           // sends email to my gmail account after the build finishes with the result of the build and it's id
            emailext(
             body: """Build finished with status: ${currentBuild.currentResult}
             Job: ${env.JOB_NAME}
