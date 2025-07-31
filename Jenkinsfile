@@ -2,7 +2,7 @@ pipeline {
     agent { label 'aws-slave-node' }
 
     stages {
-        // verfies installations of docker, git and trivy
+        // verifies installations of docker, git and trivy
         stage('Docker, Git and Trivy installions') {
             steps {
                 sh 'docker -v'
