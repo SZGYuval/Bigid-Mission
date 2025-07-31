@@ -1,7 +1,7 @@
 namespace: web-app
 
 image:
-  repository: szgyuval123/bigid-repo
+  repository: szgyuval123/mission-repo
   tag: latest
   pullPolicy: IfNotPresent
 
