@@ -1,7 +1,7 @@
 import unittest
 from main import app
 
-
+# class which contains unit tests
 class MyUnitTests(unittest.TestCase):
 
     def setUp(self):
