@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: web-application-container
-          image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: {{ .Values.service.port }}
           startupProbe:
