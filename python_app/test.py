@@ -13,7 +13,7 @@ class MyUnitTests(unittest.TestCase):
         response = self.client.get('/')
 
         # check whether the status code is 200
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 201)
 
     def test_health_endpoint_code(self):
         # sends http request to /health and save the response in a variable
