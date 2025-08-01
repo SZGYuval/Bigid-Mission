@@ -95,6 +95,15 @@ pipeline {
             }
         }
 
+        // creates the certificate for the ingress
+        stage('Creates certificate for ingress') {
+            steps {
+                sh '''
+                    kubectl apply -f cluster-issuer.yaml
+                    kubectl apply -f ingress-certificate.yaml
+                '''
+            }
+        }
         // creates the helm chart for the web application if not already exists
         // replaces current .yaml in the template directory with the yaml files provided in the workspace from the github repo
         stage('Creating Helm Chart for Web Application') {

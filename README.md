@@ -64,7 +64,7 @@ values.yaml
 because there wasn't enough space left in /tmp directory so I had to resize it.
 
 2- When deploying the helm chart to my K8S cluster. The pods were evicted from
-the node. I checked the logs using the discribe command and saw alert on disk
+the node. I checked the logs using the describe command and saw alert on disk
 pressure on the node. In order to solve it I resized the EBS volume.
 
 3- When I configured the pipeline to send emails, at first I just configured
@@ -98,3 +98,6 @@ thought it worked because and I succeeded to generate reports but then I saw
 that the trivy convert command is not installed. I searched for another trivy 
 installation. In the end I found suitable installation which answered all my
 requirements.
+
+7- I also installed certificate to my ingress controller. In order to do so,
+I used cert-manager in my cluster.
