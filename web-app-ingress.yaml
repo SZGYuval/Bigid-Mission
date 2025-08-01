@@ -17,3 +17,4 @@ spec:
                   number: {{ .Values.service.port }}
             path: "/"
             pathType: {{ .Values.ingress.pathType }}
+      host: app.yuval-raveh.net
