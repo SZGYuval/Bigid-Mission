@@ -100,4 +100,17 @@ installation. In the end I found suitable installation which answered all my
 requirements.
 
 7- I also installed certificate to my ingress controller. In order to do so,
-I used cert-manager in my cluster.
+I used cert-manager in my cluster. After installing the cert-manager component
+from the web I configured cluster issuer and certificate. The problem was that 
+cluster-issuer didn't approve the certificate despite being in healthy status.
+Using kubectl describe command I looked on the details of the CertificateRequest.
+I saw that it created an order object so I looked into it. It was in a pending 
+state. Using the describe command I saw that a challenge object was created as 
+well. When I looked into this object, I saw an error of connection refused.
+First, I allowed port 80 in the security group of the server but the problem
+still remained. After a lot of investigation online, I realized that is says
+the connection is refused because there is no process which listens on the
+port. I added hostPort: 80 and hostPort: 443 within the deployment of the
+ingress-nginx controller. By doing that I succeeded to establish a connection
+to the acma server online and then cert-manager could approve the certificate
+for the ingress of the application.
