@@ -85,7 +85,9 @@ pipeline {
                 sh '''
                     if ! helm status ingress-nginx -n ingress-nginx > /dev/null 2>&1; then
                         echo "Ingress-Nginx not found. Installing..."
-                        helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace --set controller.service.type=NodePort
+                        helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace \
+                        --set controller.service.type=NodePort --set controller.hostPorts.http=80 \
+                        --set controller.hostPorts.https=443
                     else
                         echo "Ingress-Nginx already installed. Skipping installation."
                     fi
@@ -106,7 +108,6 @@ pipeline {
                     rm -f web-app-chart/templates/*.yaml
                     mv web-app-deployment.yaml web-app-chart/templates/
                     mv web-app-service.yaml web-app-chart/templates/
-                    mv web-app-namespace.yaml web-app-chart/templates/
                     mv web-app-ingress.yaml web-app-chart/templates/
                     mv web-app-secret.yaml web-app-chart/templates
                 '''
