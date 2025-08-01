@@ -16,7 +16,8 @@
 * VPC
 * Internet Gateway
 * 2 public subnets
-* 2 private subnets
+* Load Balancer for the jenkins server
+* Hosted Zone in route 53
 
 **Version Control:**
 * Project is version-controlled using GitHub.
